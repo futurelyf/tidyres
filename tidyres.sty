@@ -1,0 +1,53 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tidyres}[2023-02-10 v1.0.0]
+
+% packages %
+\RequirePackage{paracol}
+\RequirePackage{tabularray}
+\RequirePackage{enumitem}
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage[dvipsnames]{xcolor}
+\RequirePackage{hologo}
+\RequirePackage{setspace}
+\RequirePackage[hidelinks]{hyperref}
+\RequirePackage{fontawesome}
+
+% format %
+\setlength{\parindent}{0pt}
+\setlength{\columnsep}{2em}
+\columnratio{0.12,0.88}
+\setlist{label=\textbullet,leftmargin=*,nolistsep}
+\linespread{1.25}
+\pagestyle{empty}
+
+% font %
+% \newfontfamily\textcm{CMU Serif}
+
+% definition %
+\newcommand{\restitle}[6]
+{\begin{spacing}{1.15}
+\begin{tblr}{
+  column{1} = {l},
+  column{2} = {r},
+  column{3} = {l},
+  cell{1}{1} = {r=4}{},
+  colspec = {X[5]X[2.8]X[2.2]}
+}
+\hspace{6mm}{\fontsize{22}{22}\selectfont \sc #1}
+& \faLocationArrow
+& #2 \\
+& \faAt
+& {\sl #3} \\
+& \faPhone
+& #4 \\
+& \faLinkedinSquare
+& \href{#6}{Linkedin - {\sl #5}}\\
+\hline
+\end{tblr}\end{spacing}\vspace{7mm}}
+
+\newenvironment{ressection}[2][Section]
+{\begin{paracol}{2} {\sc #1} \switchcolumn {#2}}
+{\end{paracol}\vspace{5mm}}
+
+\newcommand{\ressep}[0]{\vspace{2mm}}
