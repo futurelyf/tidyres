@@ -1,0 +1,162 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tidyres}[2023-07-27 v2.0.0]
+
+% packages %
+\RequirePackage{paracol}
+\RequirePackage{tabularray}
+\RequirePackage[dvipsnames]{xcolor}
+\RequirePackage{setspace}
+\RequirePackage[hidelinks]{hyperref}
+\RequirePackage{minted}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{enumitem}
+\RequirePackage{amsmath,amssymb}
+\RequirePackage{hologo}
+\RequirePackage{fontawesome}
+\RequirePackage{expkv-def,expkv-cs}
+
+
+% format %
+\setlength{\parindent}{0pt}
+\setlength{\columnsep}{2em}
+\columnratio{0.12,0.88}
+\setlist{label=\textbullet,leftmargin=*,nolistsep}
+\linespread{1.25}
+\pagestyle{empty}
+
+%%% font %%%
+\RequirePackage{fontspec}
+\RequirePackage{unicode-math}
+\setmainfont{TeX Gyre Termes}
+\setsansfont{TeX Gyre Heros}
+\setmonofont{NewComputerModernMono10}
+\setmathfont{NewComputerModernMath}
+\newfontfamily\textcm{NewComputerModern10}
+\newfontfamily\texttm{TeX Gyre Termes}
+\newfontfamily\texthr{TeX Gyre Heros}
+\unimathsetup{math-style=TeX, bold-style=TeX}
+
+% definition %
+\ekvdefinekeys{restitlekey}{
+    store name=\restitlekey@name,
+    initial name={Name},
+    store location=\restitlekey@location,
+    initial location={Location},
+    store email=\restitlekey@email,
+    initial email={Email},
+    store phone=\restitlekey@phone,
+    initial phone={Phone},
+    store linkedinid=\restitlekey@linkedinid,
+    initial linkedinid={Linkedin ID},
+    store linkedinurl=\restitlekey@linkedinurl,
+    initial linkedinurl={http://linkedin.com},
+}
+\ekvsetdef\restitlekeyset{restitlekey}
+\newcommand{\restitle}[1]
+{
+\restitlekeyset{#1}
+\begin{spacing}{1.15}
+\begin{tblr}{
+    column{1} = {l},
+    column{2} = {r},
+    column{3} = {l},
+    cell{1}{1} = {r=4}{},
+    colspec = {X[5]X[2.5]X[2.5]},
+    hline{Z} = {1}{1-Z}{0em},
+    hline{Z} = {2}{1-Z}{0.05em}
+}
+    \hspace{6mm}{\fontsize{22}{22}\selectfont \sc \restitlekey@name}
+    & \faLocationArrow
+    & \restitlekey@location \\
+    & \faAt
+    & {\sl \restitlekey@email} \\
+    & \faPhone
+    & \restitlekey@phone \\
+    & \faLinkedinSquare
+    & \href{\restitlekey@linkedinurl}{Linkedin - {\sl \restitlekey@linkedinid}}
+\end{tblr}
+\end{spacing}
+\vspace{5mm}
+}
+
+\newenvironment{ressection}[2][Section]
+{
+    \begin{paracol}{2}
+        {\sc #1}
+        \switchcolumn
+        {#2}
+}
+{
+    \end{paracol}
+    \vspace{5mm}
+}
+
+\newcommand{\ressep}[0]{\vspace{2mm}}
+
+
+
+
+
+%%% tcolorbox for documentation purposes %%%
+\newtcbox{\boxedtitle}[1][gray]{
+    on line,
+    arc=3pt,
+    colback=#1!95!white,
+    colframe=#1!95!white,
+    boxrule=1pt,
+    boxsep=0pt,
+    left=3pt,
+    right=3pt,
+    top=3pt,
+    bottom=3pt
+}
+\renewcommand{\theFancyVerbLine}{\rmfamily\textcolor{gray}{\arabic{FancyVerbLine}}}
+\tcbuselibrary{minted}
+\ekvdefinekeys{codeboxkey}{
+    store title=\codeboxkey@title,
+    initial title={},
+    store color=\codeboxkey@color,
+    initial color=LimeGreen
+}
+\ekvsetdef\codeboxkeyset{codeboxkey}
+\newenvironment{codebox}[1][]{
+    \codeboxkeyset{#1}
+    \tcblisting{
+        listing engine=minted,
+        minted style=manni,
+        minted language=tex,
+        minted options={
+            fontsize=\small,
+            breaklines,
+            autogobble,
+            linenos,
+            numbersep=0.25cm,
+            escapeinside=||
+        },
+        enhanced jigsaw,
+        breakable,
+        listing only,
+        left=0.75cm,
+        lefttitle=0.3cm,
+        arc=5pt,
+        boxrule=1pt,
+        colback=\codeboxkey@color!1!white,
+        colframe=\codeboxkey@color!95!black,
+        top=0cm,
+        bottom=0cm,
+        title={\texthr \boxedtitle[\codeboxkey@color]{\bfseries\textcolor{white}{CODE}} \textcolor{\codeboxkey@color}{\codeboxkey@title}},
+        toptitle=0.5ex,
+        bottomtitle=0.5ex,
+        titlerule=0ex,
+        colbacktitle=\codeboxkey@color!10!white,
+        overlay={\begin{tcbclipinterior}
+        \fill[\codeboxkey@color!5!white] (frame.south west) rectangle ([xshift=0.75cm]frame.north west);
+        \end{tcbclipinterior}
+        }
+    }
+}
+{
+    \endtcblisting
+}
+
+%%% Last Update: 2023-07-27 %%%

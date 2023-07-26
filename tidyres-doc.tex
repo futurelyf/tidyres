@@ -1,0 +1,200 @@
+\documentclass[a4paper,10pt]{article}
+% packages %
+\usepackage{tidyres}
+\usepackage[margin=1in]{geometry}
+\usepackage[type={CC},modifier={by},version={4.0}]{doclicense}
+\usepackage{cprotect}
+\usepackage{changepage}
+\hypersetup{colorlinks=True,allcolors=cyan}
+\renewcommand{\contentsname}{\centering Table of Contents}
+% info %
+\title{{\tt tidyres} for Tidy Formal Resume}
+\author{\itshape Yifan Liang}
+\date{v2.0.0 2023-07-27}
+
+% document %
+\begin{document}
+
+\maketitle
+\tableofcontents
+\thispagestyle{empty}
+
+\newpage
+\setcounter{page}{1}
+\pagestyle{plain}
+
+\section{Introduction}
+\subsection{Basic Functions}
+This {\tt tidyres} package aims to provide users with a simple interface to create multi-column style formal resume. The package is comprised of three major commands/environments:
+
+\begin{enumerate}[label=\textbullet,leftmargin=6ex,topsep=4ex]
+    \item \verb+\restitle+ command
+    \item \verb+ressection+ environment
+    \item \verb+\ressep+ command
+\end{enumerate}
+
+Users can also incorporate other packages such as \verb+enumitem+ to make bullet point in the resume.
+
+\subsection{Notes for v2.0.0}
+As of July 27, 2023, {\tt tidyres} requires the users to use \hologo{XeLaTeX} or \hologo{LuaLaTeX} to compile as the additional customization feature on font is added, which loads the {\tt fontspec} package.\\
+\\
+Additionally, the \verb+\restitle+ command now accepts key values to make the title for your resume.
+
+\subsection{License}
+This work is licensed under \href{https://creativecommons.org/licenses/by/4.0/}{Creative Commons "Attribution 4.0 International" license}.\\
+\\
+For detailed information about the license, please visit the Creative Commons' website by clicking the \textcolor{Cyan}{cyan text above} or the license image below.
+\\
+\begin{flushright}
+    \doclicenseImage
+\end{flushright}
+
+\newpage
+
+\section{General Setup Tips}
+\subsection{Page Margin}
+For a typical resume, depending on the font style and font size you use, it is suggested that you set the page margin between {\bf 0.5 inch} to {\bf 1 inch}.\\
+~\\
+You can set the margin with the {\tt geometry} package using the following code:
+\begin{codebox}[title=Page Margin]
+\usepackage[margin=0.5in]{geometry}
+\end{codebox}
+
+\vspace{1cm}
+
+\subsection{Font Size}
+Typically, a resume would use {\bf 9pt} to {\bf 11pt} font.\\
+~\\
+I would suggest using the {\tt extarticle} class to set the font size globally:
+
+\begin{codebox}[title=Font Size]
+\documentclass[9pt]{extarticle}
+% The extarticle class supports at least 8pt font size.
+\end{codebox}
+\newpage
+
+\section{Resume Title}
+
+\subsection{Goal}
+The \verb+\restitle+ command helps user to print the title of the resume, which contains key information such as name, location, email, phone, and Linkedin ID.\\
+
+\subsection{Example Code}
+\begin{codebox}[title=Resume Title Example Code]
+\restitle{
+    name=John Doe,
+    location=New York,
+    email=john.doe@gmail.com,
+    phone=(646) 111-1234,
+    linkedinid=johndoe,
+    linkedinurl=http://linkedin.com
+}
+\end{codebox}
+
+\vspace{1cm}
+
+{\it will produce (on the top of the page):}
+
+\vspace{1cm}
+
+\begin{tcolorbox}[standard jigsaw,opacityback=0.1,colback=gray,boxrule=0.5pt]
+\restitle{
+    name=John Doe,
+    location=New York,
+    email=john.doe@gmail.com,
+    phone=(646) 111-1234,
+    linkedinid=johndoe,
+    linkedinurl=http://linkedin.com
+}
+\end{tcolorbox}
+
+\vspace{1cm}
+
+\subsection{Note}
+The hyperlink color of Linkedin can be set via {\tt hyperref} package. If you wish to set it in black, you may use the following code:
+
+\begin{codebox}[title=Color of Hyperlink]
+\usepackage[hidelinks]{hyperref}
+\end{codebox}
+
+\newpage
+
+\section{Resume Section}
+
+\subsection{Goal}
+The \verb+ressection+ environment helps users set the sections (e.g., Education, Experience, Certifications, etc.) of the resume.\\
+~\\
+You may use {\tt enumerate} or the {\tt itemize} environment within the {\tt ressection} environment to create bullet points to specify the specific experience/event.\\
+~\\
+The \verb+\ressep+ command separates the experience/event within a section.
+
+\newpage
+
+\subsection{Example Code}
+\begin{codebox}[title=Resume Section Example Code]
+\begin{ressection}[Education]
+    {\bf ABC University}, {\sl College of Arts \& Science}, New York, NY
+    \hfill
+    Feb 2023 - Present
+
+    \begin{enumerate}
+        \item Bachelor of Arts in Economics (Minor in Mathematics)
+        \item Cumulative GPA: 4.0/4.0
+        \item Honors \& Societies: ABC Economics Society
+        \item Related Coursework: ABC Economics 101, ABC Statistics 101
+    \end{enumerate}
+    
+    \ressep
+
+    {\bf XYZ High School}, New Jersey, NY
+    \hfill
+    Jan 2021 - Feb 2023
+    
+    \begin{enumerate}
+        \item General High School Diploma
+        \item Cumulative GPA: 3.7/4.0
+        \item Honors \& Societies: XYZ Poem Society
+    \end{enumerate}
+\end{ressection}
+\end{codebox}
+
+\vspace{1cm}
+
+{\it will produce:}
+
+\vspace{1cm}
+\begin{ressection}[Education]
+    {\bf ABC University}, {\sl College of Arts \& Science}, New York, NY
+    \hfill
+    Feb 2023 - Present
+
+    \begin{enumerate}
+        \item Bachelor of Arts in Economics (Minor in Mathematics)
+        \item Cumulative GPA: 4.0/4.0
+        \item Honors \& Societies: ABC Economics Society
+        \item Related Coursework: ABC Economics 101, ABC Statistics 101
+    \end{enumerate}
+    
+    \ressep
+
+    {\bf XYZ High School}, New Jersey, NY
+    \hfill
+    Jan 2021 - Feb 2023
+    
+    \begin{enumerate}
+        \item General High School Diploma
+        \item Cumulative GPA: 3.7/4.0
+        \item Honors \& Societies: XYZ Poem Society
+    \end{enumerate}
+\end{ressection}
+
+\vspace{-6cm}
+
+\begin{adjustwidth}{-15pt}{-15pt}
+\begin{tcolorbox}[standard jigsaw,opacityback=0.1,colback=gray,boxrule=0.5pt]
+    \vspace{5cm}
+\end{tcolorbox}
+\end{adjustwidth}
+
+\end{document}
+
+%%% Last Update: 2023-07-27 %%%
